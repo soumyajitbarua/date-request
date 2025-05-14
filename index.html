@@ -6,6 +6,9 @@
     body {
       text-align: center;
       font-family: Arial, sans-serif;
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
     }
     .btn {
       margin: 10px;
@@ -14,6 +17,15 @@
       background-color: yellow;
       border: none;
       cursor: pointer;
+      position: absolute;
+    }
+    #yesBtn {
+      top: 60%;
+      left: 40%;
+    }
+    #noBtn {
+      top: 60%;
+      left: 55%;
     }
   </style>
 </head>
@@ -22,7 +34,29 @@
   <img src="https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif" alt="Cute Kitten" width="300">
   <h2>PLEASE, PLEASE, PLEASE</h2>
   <br>
-  <button class="btn" onclick="alert('Yay! Can’t wait!')">YES LOVE :)</button>
-  <button class="btn" onclick="alert('Aww :( Maybe next time')">NOOOO</button>
+  <button class="btn" id="yesBtn" onclick="alert('Yay! Can’t wait!')">YES LOVE :)</button>
+  <button class="btn" id="noBtn">NOOOO</button>
+
+  <audio id="noSound" src="https://www.soundjay.com/button/sounds/button-10.mp3" preload="auto"></audio>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const noSound = document.getElementById("noSound");
+
+    document.addEventListener("mousemove", function(e) {
+      const rect = noBtn.getBoundingClientRect();
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+      const distance = Math.hypot(mouseX - rect.left, mouseY - rect.top);
+
+      if (distance < 100) {
+        const newLeft = Math.random() * (window.innerWidth - 100);
+        const newTop = Math.random() * (window.innerHeight - 50);
+        noBtn.style.left = `${newLeft}px`;
+        noBtn.style.top = `${newTop}px`;
+        noSound.play();
+      }
+    });
+  </script>
 </body>
 </html>
